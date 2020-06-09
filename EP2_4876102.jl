@@ -165,3 +165,56 @@ function checkJackson(x, cards)
 end
 
 checkJacksonNumber()
+
+function decimalToBasis( decimal , base)
+
+    if base < 2
+        return 0
+    end
+
+    exp::BigInt = 1
+    num::BigInt = 0
+    while ( decimal != 0 )
+        mod = decimal % base
+        num += mod * exp
+        exp *= 10
+        decimal = div(decimal,base)
+    end
+
+    return num
+
+end
+
+function minValLoader( x , minVal, cards )
+
+    digt = digits(x)
+    sizeDigt = length(digt)
+
+    for index in 1 : sizeDigt
+        minVal[digt[index] + 1] += 1
+    end
+
+end
+
+function checkWillBase(b, cards)
+
+    sizeVector = 10
+    v = zeros(Int, sizeVector)
+    minVal = zeros(Int, sizeVector)
+    minValLoader( decimalToBasis(6174 , b) , minVal, cards )
+
+    for index in 1 : length(cards)
+        v[cards[index] + 1] += 1
+    end
+
+    for index in 1 : sizeVector
+        if v[index] < minVal[index]
+            return false
+        end
+    end
+
+    return true
+
+end
+
+checkWillNumberBase()
