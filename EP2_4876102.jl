@@ -91,3 +91,54 @@ function checkTaki(cards)
 end
 
 checkTakiNumber()
+
+function minValueLoader( x , minValue, cards )
+
+    digitsJackson = digits(x)
+    sizeJackson = length(digitsJackson)
+
+    if length(cards) < 8 + sizeJackson
+        return false
+    end
+
+    minValue[1 + 1] = 3
+    minValue[4 + 1] = 1
+    minValue[6 + 1] = 1
+    minValue[7 + 1] = 3
+
+    for index in 1 : sizeJackson
+        minValue[digitsJackson[index] + 1] += 1
+    end
+
+    return true
+
+end
+
+function checkJackson(x, cards)
+
+    sizeVector = 10
+    v = zeros(Int, sizeVector)
+    minValue = zeros(Int, sizeVector)
+
+    for index in 1 : length(cards)
+        v[cards[index] + 1] += 1
+    end
+
+    if !minValueLoader( x, minValue, cards )
+        return false
+
+    else
+
+        for index in 1 : sizeVector
+            if v[index] < minValue[index]
+                return false
+            end
+        end
+
+        return true
+
+    end
+
+end
+
+checkJacksonNumber()
