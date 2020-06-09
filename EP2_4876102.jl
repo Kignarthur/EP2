@@ -52,4 +52,24 @@ function checkWill(cards)
 
 end
 
-checkKaprekar()
+checkWillNumber()
+
+function checkTaki(cards)
+
+    v = zeros(Int, 10)
+
+    for index in 1 : length(cards)
+        if cards[index] != 0
+            v[cards[index]] += 1
+        end
+    end
+
+    if v[1] < 3 || v[4] < 1 || v[6] < 1 || v[7] < 3
+        return false
+    else
+        return true
+    end
+
+end
+
+checkTakiNumber()
