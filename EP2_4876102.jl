@@ -1,6 +1,7 @@
 using Test
 
-function checkKaprekar()
+function checkWillNumber()
+    @test checkWill([]) == false
     @test checkWill([0, 1]) == false
     @test checkWill([1, 4, 6]) == false
     @test checkWill([0, 1, 2, 3, 4, 5, 7, 8, 9])== false
