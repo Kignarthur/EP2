@@ -52,6 +52,29 @@ function checkJacksonNumber()
     println("OK")
 end
 
+function checkWillNumberBase()
+    @test checkWillBase(2,[6, 1, 7, 4]) == false
+    @test checkWillBase(2,[1, 1, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1, 9]) == false
+    @test checkWillBase(3,[0, 2, 1, 1, 0, 2, 2, 9]) == false
+    @test checkWillBase(4,[1, 2, 0, 3, 1, 0, 9]) == false
+    @test checkWillBase(5,[4, 4, 1, 4, 1, 9]) == false
+    @test checkWillBase(6,[3, 4, 4, 3, 9]) == false
+    @test checkWillBase(7,[0, 0, 0, 2, 9]) == false
+    @test checkWillBase(8,[6, 0, 3, 1, 9]) == false
+    @test checkWillBase(9,[4, 0, 2, 9]) == false
+    @test checkWillBase(10,[1, 6, 7, 0]) == false
+    @test checkWillBase(2,[0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 0, 1, 1]) == true
+    @test checkWillBase(3,[0, 2, 1, 0, 2, 2, 0, 1]) == true
+    @test checkWillBase(4,[0, 2, 3, 2, 1, 1, 0]) == true
+    @test checkWillBase(5,[4, 4, 4, 4, 1, 1]) == true
+    @test checkWillBase(6,[4, 3, 0, 4, 3]) == true
+    @test checkWillBase(7,[4, 2, 0, 0, 0]) == true
+    @test checkWillBase(8,[0, 3, 1, 4, 6]) == true
+    @test checkWillBase(9,[2, 4, 0, 8]) == true
+    @test checkWillBase(10,[1, 7, 4, 6]) == true
+    println("OK")
+end
+
 function checkWill(cards)
 
     v = zeros(Int, 10)
