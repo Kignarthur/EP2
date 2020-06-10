@@ -77,6 +77,21 @@ function checkWillNumberBase()
     println("OK")
 end
 
+function checkFriendsNumber()
+    @test checkFriends([], []) == nothing
+    @test checkFriends([], [2]) == nothing
+    @test checkFriends([2], []) == nothing
+    @test checkFriends([2], [2]) == nothing
+    @test checkFriends([8,100], [6,1,7,4]) == nothing
+    @test checkFriends([42,333], [3,3,3,4,2]) == nothing
+    @test checkFriends([0, 0], [6,7,1,4,0,0]) == []
+    @test checkFriends([1234], [6, 1, 7, 4, 7, 7, 1, 1, 1, 2, 3, 4]) == [7, 7, 1, 1]
+    @test checkFriends([123456789,0], [6,7,1,4,9,8,7,3,5,4,6,1,2,0,1]) == [1]
+    @test checkFriends([3,14,15,92,65], [3,1,4,1,5,9,2,6,5,3,5,8,6,1,4,7]) == [3,5,8]
+
+    println("OK")
+end
+
 # --------------- Tests End ---------------
 
 function minimumValues(favoriteNumbers)
@@ -98,7 +113,7 @@ function minimumValues(favoriteNumbers)
     return minValVector
 end
 
-function checkForMinimalCards(minValVector, cards)
+function areTheCardsEnough(minValVector, cards)
 
     vectorSize = 10
     vector = zeros(Int, vectorSize)
@@ -121,7 +136,7 @@ end
 function checkWill(cards)
 
     favoriteNumbers = [6174]
-    return checkForMinimalCards(minimumValues(favoriteNumbers), cards)
+    return areTheCardsEnough(minimumValues(favoriteNumbers), cards)
 
 end
 
@@ -132,7 +147,7 @@ checkWillNumber()
 function checkTaki(cards)
 
     favoriteNumbers = [6174,7711]
-    return checkForMinimalCards(minimumValues(favoriteNumbers), cards)
+    return areTheCardsEnough(minimumValues(favoriteNumbers), cards)
 
 end
 
@@ -143,7 +158,7 @@ checkTakiNumber()
 function checkJackson(x, cards)
 
     favoriteNumbers = [6174,7711,x]
-    return checkForMinimalCards(minimumValues(favoriteNumbers), cards)
+    return areTheCardsEnough(minimumValues(favoriteNumbers), cards)
 
 end
 
@@ -174,8 +189,40 @@ function checkWillBase(b, cards)
     end
 
     favoriteNumbers = [decimalToBasis(6174, b)]
-    return checkForMinimalCards(minimumValues(favoriteNumbers), cards)
+    return areTheCardsEnough(minimumValues(favoriteNumbers), cards)
 
 end
 
 checkWillNumberBase()
+
+# --------------- WILL AND FRIENDS ---------------
+
+function remainingCards(indexBasedComparator, cards)
+
+    placeHolder = []
+
+    for index in  1 : length(cards)
+
+        if  indexBasedComparator[ cards[index] + 1 ] > 0
+            indexBasedComparator[ cards[index] + 1 ] -= 1
+        else
+            push!(placeHolder,cards[index])
+        end
+
+    end
+
+    return placeHolder
+end
+
+
+function checkFriends(numbers, cards)
+
+    push!(numbers,6174)
+    indexBasedComparator = minimumValues(numbers)
+
+    areTheCardsEnough(indexBasedComparator, cards) ?
+        remainingCards(indexBasedComparator, cards) : nothing
+
+end
+
+checkFriendsNumber()
