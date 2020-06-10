@@ -75,98 +75,92 @@ function checkWillNumberBase()
     println("OK")
 end
 
-# function checkWill(cards)
+# --------------- Tests End ---------------
 
-#     v = zeros(Int, 10)
+function minValLoader(numbersVector, minValVector)
 
-#     for index in 1 : length(cards)
-#         if cards[index] != 0
-#             v[cards[index]] += 1
-#         end
-#     end
+    if length(cards) < 8 + length(digits(x))
+        return false
+    end
 
-#     if v[1] == 0 || v[4] == 0 || v[6] == 0 || v[7] == 0
-#         return false
-#     else
-#         return true
-#     end
+    for index in 1 : length(numbersVector)
 
-# end
+        digitsVector = digits(numbersVector[index])
 
-checkWillNumber()
+        for digtIndex in 1 : length(digitsVector)
 
-function checkTaki(cards)
+            minValVector[ digitsVector[digtIndex] + 1 ] += 1
 
-    v = zeros(Int, 10)
+        end
+
+    end
+end
+
+function checkIfMin(vector, minValVector, cards)
 
     for index in 1 : length(cards)
-        if cards[index] != 0
-            v[cards[index]] += 1
+        vector[cards[index] + 1] += 1
+    end
+
+    for index in 1 : length(vector)
+        if vector[index] < minValVector[index]
+            return false
         end
     end
 
-    if v[1] < 3 || v[4] < 1 || v[6] < 1 || v[7] < 3
-        return false
-    else
-        return true
-    end
+    return true
+end
+
+# --------------- WILL ---------------
+
+function checkWill(cards)
+
+    vector = zeros(Int, 10)
+    minValVector = zeros(Int, 10)
+    numbersVector = [6174]
+
+    minValLoader(numbersVector, minValVector)
+
+    return checkIfMin(vector, minValVector, cards)
+
+end
+
+checkWillNumber()
+
+# --------------- TAKI ---------------
+
+function checkTaki(cards)
+
+    vector = zeros(Int, 10)
+    minValVector = zeros(Int, 10)
+    numbersVector = [6174,7711]
+
+    minValLoader(numbersVector, minValVector)
+
+    return checkIfMin(vector, minValVector, cards)
 
 end
 
 checkTakiNumber()
 
-function minValueLoader( x , minValue, cards )
-
-    digitsJackson = digits(x)
-    sizeJackson = length(digitsJackson)
-
-    if length(cards) < 8 + sizeJackson
-        return false
-    end
-
-    minValue[1 + 1] = 3
-    minValue[4 + 1] = 1
-    minValue[6 + 1] = 1
-    minValue[7 + 1] = 3
-
-    for index in 1 : sizeJackson
-        minValue[digitsJackson[index] + 1] += 1
-    end
-
-    return true
-
-end
-
+# --------------- JACKSON ---------------
 function checkJackson(x, cards)
 
-    sizeVector = 10
-    v = zeros(Int, sizeVector)
-    minValue = zeros(Int, sizeVector)
+    vector = zeros(Int, 10)
+    minValVector = zeros(Int, 10)
+    numbersVector = [6174,7711,x]
 
-    for index in 1 : length(cards)
-        v[cards[index] + 1] += 1
-    end
+    minValLoader(numbersVector, minValVector)
 
-    if !minValueLoader( x, minValue, cards )
-        return false
-
-    else
-
-        for index in 1 : sizeVector
-            if v[index] < minValue[index]
-                return false
-            end
-        end
-
-        return true
-
-    end
+    return checkIfMin(vector, minValVector, cards)
 
 end
 
 checkJacksonNumber()
 
-function decimalToBasis( decimal , base)
+# --------------- WILL AGAIN ---------------
+
+function decimalToBasis(decimal, base)
 
     if base < 2
         return 0
@@ -174,6 +168,7 @@ function decimalToBasis( decimal , base)
 
     exp::BigInt = 1
     num::BigInt = 0
+
     while ( decimal != 0 )
         mod = decimal % base
         num += mod * exp
@@ -185,35 +180,15 @@ function decimalToBasis( decimal , base)
 
 end
 
-function minValLoader( x , minVal, cards )
-
-    digt = digits(x)
-    sizeDigt = length(digt)
-
-    for index in 1 : sizeDigt
-        minVal[digt[index] + 1] += 1
-    end
-
-end
-
 function checkWillBase(b, cards)
 
-    sizeVector = 10
-    v = zeros(Int, sizeVector)
-    minVal = zeros(Int, sizeVector)
-    minValLoader( decimalToBasis(6174 , b) , minVal, cards )
+    vector = zeros(Int, 10)
+    minValVector = zeros(Int, 10)
+    numbersVector = [decimalToBasis(6174, b)]
 
-    for index in 1 : length(cards)
-        v[cards[index] + 1] += 1
-    end
+    minValLoader(numbersVector, minValVector)
 
-    for index in 1 : sizeVector
-        if v[index] < minVal[index]
-            return false
-        end
-    end
-
-    return true
+    return checkIfMin(vector, minValVector, cards)
 
 end
 
