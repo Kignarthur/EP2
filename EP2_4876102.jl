@@ -100,13 +100,14 @@ end
 
 function checkForMinimalCards(minValVector, cards)
 
-    vector = zeros(Int, 10)
+    vectorSize = 10
+    vector = zeros(Int, vectorSize)
 
     for index in 1 : length(cards)
-        vector[cards[index] + 1] += 1
+        vector[ cards[index] + 1 ] += 1
     end
 
-    for index in 1 : length(vector)
+    for index in 1 : vectorSize
         if vector[index] < minValVector[index]
             return false
         end
