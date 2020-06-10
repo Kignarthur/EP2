@@ -53,6 +53,7 @@ function checkJacksonNumber()
 end
 
 function checkWillNumberBase()
+    @test checkWillBase(1,[0,1,2,3,4,5,6,7,8,9]) == false
     @test checkWillBase(2,[6, 1, 7, 4]) == false
     @test checkWillBase(2,[1, 1, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1, 9]) == false
     @test checkWillBase(3,[0, 2, 1, 1, 0, 2, 2, 9]) == false
@@ -63,6 +64,7 @@ function checkWillNumberBase()
     @test checkWillBase(8,[6, 0, 3, 1, 9]) == false
     @test checkWillBase(9,[4, 0, 2, 9]) == false
     @test checkWillBase(10,[1, 6, 7, 0]) == false
+    @test checkWillBase(11,[0,1,2,3,4,5,6,7,8,9]) == false
     @test checkWillBase(2,[0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 0, 1, 1]) == true
     @test checkWillBase(3,[0, 2, 1, 0, 2, 2, 0, 1]) == true
     @test checkWillBase(4,[0, 2, 3, 2, 1, 1, 0]) == true
@@ -77,15 +79,13 @@ end
 
 # --------------- Tests End ---------------
 
-function minValLoader(numbersVector, minValVector)
+function minimumValues(favoriteNumbers)
 
-    if length(cards) < 8 + length(digits(x))
-        return false
-    end
+    minValVector = zeros(Int, 10)
 
-    for index in 1 : length(numbersVector)
+    for index in 1 : length(favoriteNumbers)
 
-        digitsVector = digits(numbersVector[index])
+        digitsVector = digits(favoriteNumbers[index])
 
         for digtIndex in 1 : length(digitsVector)
 
@@ -94,9 +94,13 @@ function minValLoader(numbersVector, minValVector)
         end
 
     end
+
+    return minValVector
 end
 
-function checkIfMin(vector, minValVector, cards)
+function checkForMinimalCards(minValVector, cards)
+
+    vector = zeros(Int, 10)
 
     for index in 1 : length(cards)
         vector[cards[index] + 1] += 1
@@ -115,13 +119,8 @@ end
 
 function checkWill(cards)
 
-    vector = zeros(Int, 10)
-    minValVector = zeros(Int, 10)
-    numbersVector = [6174]
-
-    minValLoader(numbersVector, minValVector)
-
-    return checkIfMin(vector, minValVector, cards)
+    favoriteNumbers = [6174]
+    return checkForMinimalCards(minimumValues(favoriteNumbers), cards)
 
 end
 
@@ -131,28 +130,19 @@ checkWillNumber()
 
 function checkTaki(cards)
 
-    vector = zeros(Int, 10)
-    minValVector = zeros(Int, 10)
-    numbersVector = [6174,7711]
-
-    minValLoader(numbersVector, minValVector)
-
-    return checkIfMin(vector, minValVector, cards)
+    favoriteNumbers = [6174,7711]
+    return checkForMinimalCards(minimumValues(favoriteNumbers), cards)
 
 end
 
 checkTakiNumber()
 
 # --------------- JACKSON ---------------
+
 function checkJackson(x, cards)
 
-    vector = zeros(Int, 10)
-    minValVector = zeros(Int, 10)
-    numbersVector = [6174,7711,x]
-
-    minValLoader(numbersVector, minValVector)
-
-    return checkIfMin(vector, minValVector, cards)
+    favoriteNumbers = [6174,7711,x]
+    return checkForMinimalCards(minimumValues(favoriteNumbers), cards)
 
 end
 
@@ -161,10 +151,6 @@ checkJacksonNumber()
 # --------------- WILL AGAIN ---------------
 
 function decimalToBasis(decimal, base)
-
-    if base < 2
-        return 0
-    end
 
     exp::BigInt = 1
     num::BigInt = 0
@@ -182,13 +168,12 @@ end
 
 function checkWillBase(b, cards)
 
-    vector = zeros(Int, 10)
-    minValVector = zeros(Int, 10)
-    numbersVector = [decimalToBasis(6174, b)]
+    if b < 2 || b > 10
+        return false
+    end
 
-    minValLoader(numbersVector, minValVector)
-
-    return checkIfMin(vector, minValVector, cards)
+    favoriteNumbers = [decimalToBasis(6174, b)]
+    return checkForMinimalCards(minimumValues(favoriteNumbers), cards)
 
 end
 
