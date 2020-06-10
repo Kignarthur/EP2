@@ -75,23 +75,23 @@ function checkWillNumberBase()
     println("OK")
 end
 
-function checkWill(cards)
+# function checkWill(cards)
 
-    v = zeros(Int, 10)
+#     v = zeros(Int, 10)
 
-    for index in 1 : length(cards)
-        if cards[index] != 0
-            v[cards[index]] += 1
-        end
-    end
+#     for index in 1 : length(cards)
+#         if cards[index] != 0
+#             v[cards[index]] += 1
+#         end
+#     end
 
-    if v[1] == 0 || v[4] == 0 || v[6] == 0 || v[7] == 0
-        return false
-    else
-        return true
-    end
+#     if v[1] == 0 || v[4] == 0 || v[6] == 0 || v[7] == 0
+#         return false
+#     else
+#         return true
+#     end
 
-end
+# end
 
 checkWillNumber()
 
