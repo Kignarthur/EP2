@@ -113,7 +113,7 @@ function minimumValues(favoriteNumbers)
     return minValVector
 end
 
-function areTheCardsEnough(minValVector, cards)
+function areThereEnoughCards(minValVector, cards)
 
     vectorSize = 10
     vector = zeros(Int, vectorSize)
@@ -136,7 +136,7 @@ end
 function checkWill(cards)
 
     favoriteNumbers = [6174]
-    return areTheCardsEnough(minimumValues(favoriteNumbers), cards)
+    return areThereEnoughCards(minimumValues(favoriteNumbers), cards)
 
 end
 
@@ -147,7 +147,7 @@ checkWillNumber()
 function checkTaki(cards)
 
     favoriteNumbers = [6174,7711]
-    return areTheCardsEnough(minimumValues(favoriteNumbers), cards)
+    return areThereEnoughCards(minimumValues(favoriteNumbers), cards)
 
 end
 
@@ -158,7 +158,7 @@ checkTakiNumber()
 function checkJackson(x, cards)
 
     favoriteNumbers = [6174,7711,x]
-    return areTheCardsEnough(minimumValues(favoriteNumbers), cards)
+    return areThereEnoughCards(minimumValues(favoriteNumbers), cards)
 
 end
 
@@ -189,7 +189,7 @@ function checkWillBase(b, cards)
     end
 
     favoriteNumbers = [decimalToBasis(6174, b)]
-    return areTheCardsEnough(minimumValues(favoriteNumbers), cards)
+    return areThereEnoughCards(minimumValues(favoriteNumbers), cards)
 
 end
 
@@ -220,7 +220,7 @@ function checkFriends(numbers, cards)
     push!(numbers,6174)
     indexBasedComparator = minimumValues(numbers)
 
-    areTheCardsEnough(indexBasedComparator, cards) ?
+    areThereEnoughCards(indexBasedComparator, cards) ?
         remainingCards(indexBasedComparator, cards) : nothing
 
 end
